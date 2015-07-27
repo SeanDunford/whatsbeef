@@ -13,13 +13,7 @@ public class GhostFaceController : MonoBehaviour {
 	Animator animator; 
 
 	void Start () {
-		GameObject ratObject = GameObject.FindGameObjectWithTag("bronBron"); 
-		MouseController mc = ratObject.GetComponent<MouseController>();
-		followObject = mc; 
 		lastTime = Time.time; 
-		if(followObject){
-			following = true; 
-		}
 		animator = GetComponent<Animator>();	
 	}	
 	// Update is called once per frame
@@ -77,6 +71,11 @@ public class GhostFaceController : MonoBehaviour {
 		Rect labelRect = new Rect(enrageIconRect.xMax, enrageIconRect.y, 100, 32);
 		GUI.Label(labelRect, "Enrage Lvl: " + enrageLvl, style);
 	}
-
-	
+	public void setFollowObject(GameObject bronBron){
+		MouseController mc = bronBron.GetComponent<MouseController>();
+		followObject = mc; 
+		if(followObject){
+			following = true; 
+		}
+	}	
 }

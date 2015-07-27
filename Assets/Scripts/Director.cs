@@ -7,9 +7,13 @@ public class Director : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		mouse = GameObject.FindGameObjectWithTag("bronBron").GetComponent<MouseController>(); 
-		GameObject go = GameObject.FindGameObjectWithTag("gFace"); 
-		ghostFace = go.GetComponent<GhostFaceController>(); 
+		GameObject bronBron = GameObject.FindGameObjectWithTag("bronBron"); 
+		mouse = bronBron.GetComponent<MouseController>(); 
+
+		GameObject[] gFaces = GameObject.FindGameObjectsWithTag("gFace");
+		GameObject gFace = GameObject.FindGameObjectWithTag("gFace"); 
+		ghostFace = gFace.GetComponent<GhostFaceController>(); 
+		ghostFace.setFollowObject(bronBron);
 	}
 	
 	// Update is called once per frame
