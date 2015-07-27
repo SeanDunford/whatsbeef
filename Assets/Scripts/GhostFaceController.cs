@@ -16,13 +16,18 @@ public class GhostFaceController : MonoBehaviour {
 		lastTime = Time.time; 
 		animator = GetComponent<Animator>();	
 	}	
+	void Update() {
+		if (following) {
+			float newX = followObject.transform.position.x - (baseFollowDistance + followDistance);  
+			Vector2 position = GetComponent<Rigidbody2D> ().position; 
+			position.x = newX; //Mathf.Round (newX * 100f) / 100f;
+			GetComponent<Rigidbody2D> ().position = position; 
+			Debug.Log ("PosX:" + position.x);
+		}
+	}
 	// Update is called once per frame
 	void FixedUpdate () {
 		if(following){
-			float newX = followObject.xPosition() - (baseFollowDistance + followDistance);  
-			Vector2 position = GetComponent<Rigidbody2D>().position; 
-			position.x = newX; 
-			GetComponent<Rigidbody2D>().position = position; 
 			updateTimers(); 
 		}
 	}

@@ -128,8 +128,8 @@ public class GeneratorScript : MonoBehaviour {
 		obj.transform.position = new Vector3(objectPositionX,randomY,0); 
 		
 		//4
-		float rotation = Random.Range(objectsMinRotation, objectsMaxRotation);
-		obj.transform.rotation = Quaternion.Euler(Vector3.forward * rotation);
+//		float rotation = Random.Range(objectsMinRotation, objectsMaxRotation);
+//		obj.transform.rotation = Quaternion.Euler(Vector3.forward * rotation);
 		
 		//5
 		objects.Add(obj);            

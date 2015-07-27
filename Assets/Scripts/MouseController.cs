@@ -7,12 +7,12 @@ public class MouseController : MonoBehaviour {
 	public float forwardMovementSpeed = 3.0f;
 	public Transform groundCheckTransform;
 	public LayerMask groundCheckLayerMask;
-	public ParticleSystem jetpack;
+//	public ParticleSystem jetpack;
 	public Texture2D coinIconTexture;
 	public AudioClip coinCollectSound;
 	public AudioSource jetpackAudio;
 	public AudioSource footstepsAudio;
-	public ParallaxScroll parallax;
+//	public ParallaxScroll parallax;
 	public Director director; 
 
 	private bool dead = false;
@@ -48,7 +48,7 @@ public class MouseController : MonoBehaviour {
 		UpdateGroundedStatus();	
 		AdjustJetpack(jetpackActive);
 		AdjustFootstepsAndJetpackSound(jetpackActive);
-		parallax.offset = transform.position.x;
+//		parallax.offset = transform.position.x;
 	} 
 
 	void UpdateGroundedStatus(){
@@ -57,8 +57,8 @@ public class MouseController : MonoBehaviour {
 	}
 
 	void AdjustJetpack (bool jetpackActive){
-		jetpack.enableEmission = !grounded;
-		jetpack.emissionRate = jetpackActive ? 300.0f : 75.0f; 
+//		jetpack.enableEmission = !grounded;
+//		jetpack.emissionRate = jetpackActive ? 300.0f : 75.0f; 
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
