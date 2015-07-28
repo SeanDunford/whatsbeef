@@ -63,12 +63,16 @@ public class MouseController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collider){
 		if (collider.gameObject.CompareTag("dTweet")){
-			if(tweets > 0){
-				director.increaseEnrage(); 
-			}
+			Debug.Log("Hit dtweet increase enrage");
+			director.increaseEnrage(); 
+			collider.gameObject.GetComponent<SpriteRenderer>().color = new Color (1f, 1f, 1f, 0); 
+			tweets--; 
 		}
 		else if(collider.gameObject.CompareTag("tweet")){
+			Debug.Log("Hit tweet decrease enrage");
 			director.decreaseEnrage(); 
+			collider.gameObject.GetComponent<SpriteRenderer>().color = new Color (1f, 1f, 1f, 0); 
+			tweets++; 
 		}
 		else if(collider.gameObject.CompareTag("ghost")){
 			dead = true;

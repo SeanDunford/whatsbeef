@@ -4,11 +4,12 @@ using System.Collections;
 public class GhostFaceController : MonoBehaviour {
 	public MouseController followObject; 
 	public ParallaxScroll parallax;
-	public float baseFollowDistance = 0; 
+	public float baseFollowDistance = 4.5f; 
 	private float followDistance = 0; 
 	private int enrageLvl = 0; 
 	private float lastTime; 
-	private int[] angerTimes = {10, 10, 10, 5}; 
+	private int[] angerTimes = {10, 15, 25, 40, 40, 50}; 
+	private float[] distances = {5.0f, 4.0f, 3.0f, 2.0f, 1.5f, .5f}; 
 	private bool following = false; 
 	Animator animator; 
 
@@ -31,6 +32,11 @@ public class GhostFaceController : MonoBehaviour {
 			GetComponent<Rigidbody2D> ().position = Vector3.MoveTowards(GetComponent<Rigidbody2D> ().position, position, 4.0f * Time.deltaTime);    
 			updateTimers(); 
 		}
+		else{
+			Vector2 newVelocity = GetComponent<Rigidbody2D>().velocity;
+			newVelocity.x = 4.2f;
+			GetComponent<Rigidbody2D>().velocity = newVelocity;
+		}
 	}
 	void updateTimers(){
 		if(Time.time > lastTime + angerTimes[enrageLvl]){
@@ -39,28 +45,34 @@ public class GhostFaceController : MonoBehaviour {
 		}
 	}
 	public void increaseEnrage(){
-		updateEnrageLvl(enrageLvl++);
+		if(enrageLvl == 5){
+			return; 
+		}
+		updateEnrageLvl(enrageLvl + 1);
+		lastTime = Time.time; 
 	}
 	public void decreaseEnrage(){
-		updateEnrageLvl(enrageLvl--);
+		if(enrageLvl == 0){
+			return; 
+		}
+		updateEnrageLvl(enrageLvl - 1);
+		lastTime = Time.time; 
 	}
 	void updateEnrageLvl(int _enrageLvl){
 		enrageLvl  = _enrageLvl; 
 		switch(enrageLvl){
 			case 0: 
-				break; 
 			case 1: 
-				break; 
 			case 2: 
+				following = true;
+			    baseFollowDistance = distances[enrageLvl];
 				break; 
 			default:
 				following = false;
-				Vector2 newVelocity = GetComponent<Rigidbody2D>().velocity;
-				newVelocity.x = 3.2f;
-				GetComponent<Rigidbody2D>().velocity = newVelocity;
 				break; 
 		}
 		animator.SetInteger("Enrage", enrageLvl);
+		Debug.Log("enrageLvl set to: " + enrageLvl);
 	}
 	void OnGUI(){
 		DisplayEnrageLvl();
