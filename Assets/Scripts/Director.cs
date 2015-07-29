@@ -36,6 +36,31 @@ public class Director : MonoBehaviour {
 			generator.generateDTweet = true;
 		}
 	}
+	void OnGUI(){
+		DisplayEnrageLvl();
+		DisplayTweets();
+	}
+	void DisplayEnrageLvl(){
+		Rect enrageIconRect = new Rect(32, 10, 32, 32);
+		GUIStyle style = new GUIStyle();
+		style.fontSize = 30;
+		style.fontStyle = FontStyle.Bold;
+		style.normal.textColor = Color.red;
+		
+		Rect labelRect = new Rect(enrageIconRect.xMax, enrageIconRect.y, 100, 32);
+		GUI.Label(labelRect, "Enrage Lvl: " + ghostFace.enrageLvl, style);
+	}
+	
+	void DisplayTweets(){
+		Rect enrageIconRect = new Rect(800, 10, 32, 32);
+		GUIStyle style = new GUIStyle();
+		style.fontSize = 30;
+		style.fontStyle = FontStyle.Bold;
+		style.normal.textColor = new Color(64.0f,153.0f,255.0f);
+
+		Rect labelRect = new Rect(enrageIconRect.xMax, enrageIconRect.y, 100, 32);
+		GUI.Label(labelRect, "Tweet Lvl: " + bronson.tweets, style);
+	}
 	void updateSpeed(){
 		float speed = initialSpeed + (lvlSpeedModifier * currLvl) + (enrageSpeedModifier * ghostFace.getEnragelvl()); 
 		bronson.speed = speed; 
@@ -47,5 +72,7 @@ public class Director : MonoBehaviour {
 	public void decreaseEnrage(){
 		ghostFace.decreaseEnrage(); 
 	}
+
+
 
 }

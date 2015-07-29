@@ -7,7 +7,7 @@ public class GhostFaceController : MonoBehaviour {
 	public float baseFollowDistance = 4.5f; 
 	private float followDistance = 0; 
 	public float speed = 3.0f; 
-	private int enrageLvl = 0; 
+	public int enrageLvl = 0; 
 	private float lastTime; 
 	private int[] angerTimes = {10, 15, 25, 40, 40, 50}; 
 	private float[] distances = {5.0f, 4.0f, 3.0f, 2.0f, 1.5f, .5f}; 
@@ -75,21 +75,7 @@ public class GhostFaceController : MonoBehaviour {
 		animator.SetInteger("Enrage", enrageLvl);
 		Debug.Log("enrageLvl set to: " + enrageLvl);
 	}
-	void OnGUI(){
-		DisplayEnrageLvl();
-	}
-	void DisplayEnrageLvl(){
-		Rect enrageIconRect = new Rect(32, 10, 32, 32);
-//		GUI.DrawTexture(coinIconRect, coinIconTexture);                         
-		
-		GUIStyle style = new GUIStyle();
-		style.fontSize = 30;
-		style.fontStyle = FontStyle.Bold;
-		style.normal.textColor = Color.red;
-		
-		Rect labelRect = new Rect(enrageIconRect.xMax, enrageIconRect.y, 100, 32);
-		GUI.Label(labelRect, "Enrage Lvl: " + enrageLvl, style);
-	}
+
 	public void setFollowObject(GameObject obj){
 		followObject = obj; 
 		following = true; 
