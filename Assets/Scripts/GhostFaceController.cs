@@ -2,10 +2,11 @@
 using System.Collections;
 
 public class GhostFaceController : MonoBehaviour {
-	public MouseController followObject; 
+	public GameObject followObject; 
 	public ParallaxScroll parallax;
 	public float baseFollowDistance = 4.5f; 
 	private float followDistance = 0; 
+	public float speed = 3.0f; 
 	private int enrageLvl = 0; 
 	private float lastTime; 
 	private int[] angerTimes = {10, 15, 25, 40, 40, 50}; 
@@ -29,12 +30,12 @@ public class GhostFaceController : MonoBehaviour {
 			float newX = followObject.transform.position.x - (baseFollowDistance + followDistance);  
 			Vector2 position = GetComponent<Rigidbody2D> ().position; 
 			position.x = Mathf.Round (newX * 100f) / 100f;
-			GetComponent<Rigidbody2D> ().position = Vector3.MoveTowards(GetComponent<Rigidbody2D> ().position, position, 4.0f * Time.deltaTime);    
+			GetComponent<Rigidbody2D> ().position = Vector3.MoveTowards(GetComponent<Rigidbody2D> ().position, position, speed * Time.deltaTime);    
 			updateTimers(); 
 		}
 		else{
 			Vector2 newVelocity = GetComponent<Rigidbody2D>().velocity;
-			newVelocity.x = 4.2f;
+			newVelocity.x = speed + (enrageLvl * 0.01f);
 			GetComponent<Rigidbody2D>().velocity = newVelocity;
 		}
 	}
@@ -89,11 +90,11 @@ public class GhostFaceController : MonoBehaviour {
 		Rect labelRect = new Rect(enrageIconRect.xMax, enrageIconRect.y, 100, 32);
 		GUI.Label(labelRect, "Enrage Lvl: " + enrageLvl, style);
 	}
-	public void setFollowObject(GameObject bronBron){
-		MouseController mc = bronBron.GetComponent<MouseController>();
-		followObject = mc; 
-		if(followObject){
-			following = true; 
-		}
+	public void setFollowObject(GameObject obj){
+		followObject = obj; 
+		following = true; 
 	}	
+	public int getEnragelvl(){
+		return enrageLvl; 
+	}
 }
