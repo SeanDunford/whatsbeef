@@ -82,7 +82,7 @@ AnimatorStateTransition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 4
+  - m_ConditionMode: 6
     m_ConditionEvent: Enrage
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
@@ -108,7 +108,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: Enrage
-    m_EventTreshold: 1
+    m_EventTreshold: 3
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 110274944}
   m_Solo: 0
@@ -209,10 +209,10 @@ AnimatorStateMachine:
     m_Position: {x: 24, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110274944}
-    m_Position: {x: 300, y: 96, z: 0}
+    m_Position: {x: 156, y: 312, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110266036}
-    m_Position: {x: 300, y: 180, z: 0}
+    m_Position: {x: 288, y: 180, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
