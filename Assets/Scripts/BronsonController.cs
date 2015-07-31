@@ -4,6 +4,8 @@ using System.Collections;
 public class BronsonController: MonoBehaviour {
 
 	public float jumpForce = 1500.0f;
+	public float blastForce = 10.0f; 
+	public bool blastingOff = false; 
 	public float speed = 3.0f;
 	public Transform groundCheckTransform;
 	public LayerMask groundCheckLayerMask;
@@ -12,52 +14,71 @@ public class BronsonController: MonoBehaviour {
 	public AudioSource footstepsAudio;
 	public Director director; 
 	public int level; 
-
+	private float lastTime; 
 	private bool dead = false;
 	public int tweets = 0;
+	public float blastOffTime = 10; 
 	private bool grounded;
+	private bool forceFall = false; 
 	Animator animator;
 	
 	// Use this for initialization
 	void Start () {
 		animator = GetComponent<Animator>();	
 		director = GameObject.FindGameObjectWithTag("director").GetComponent<Director>(); 
+		lastTime = Time.time; 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+			
 	}
-
+	void Jump(){
+		GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
+	}
+	void ForceFall(){
+		GetComponent<Rigidbody2D>().gravityScale = 1; 
+		GetComponent<Rigidbody2D>().AddForce(new Vector2(0, (-1.0f * jumpForce * 0.3f)));
+	}
 	void FixedUpdate () {
-		if(!dead && grounded && Input.GetButton("Fire1")){
-			GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
-		}
-		if (!dead){
+		if(!dead){
+			if(grounded && Input.GetButton("Fire1")){
+				Jump();
+			}
 			Vector2 newVelocity = GetComponent<Rigidbody2D>().velocity;
 			newVelocity.x = speed;
+			if(blastingOff){
+				newVelocity.x += blastForce; 
+			}
+			if(forceFall){
+				ForceFall(); 
+			}
 			GetComponent<Rigidbody2D>().velocity = newVelocity;
 		}
+		updateTimers(); 
 		UpdateGroundedStatus();	
 	} 
-
 	void UpdateGroundedStatus(){
 		grounded = Physics2D.OverlapCircle(groundCheckTransform.position, 0.1f, groundCheckLayerMask);
+		if(grounded) forceFall = false; 
 		animator.SetBool("grounded", grounded);
 	}
 	
 	void OnTriggerEnter2D(Collider2D collider){
+		if(blastingOff){
+			return; 
+		}
 		if (collider.gameObject.CompareTag("dTweet")){
 			Debug.Log("Hit dtweet increase enrage");
 			director.increaseEnrage(); 
 			collider.gameObject.GetComponent<SpriteRenderer>().color = new Color (1f, 1f, 1f, 0); 
-			tweets--; 
+			setTweets(tweets - 1);
 		}
 		else if(collider.gameObject.CompareTag("tweet")){
 			Debug.Log("Hit tweet decrease enrage");
 			director.decreaseEnrage(); 
 			collider.gameObject.GetComponent<SpriteRenderer>().color = new Color (1f, 1f, 1f, 0); 
-			tweets++; 
+			setTweets(tweets + 1); 
 		}
 		else if(collider.gameObject.CompareTag("ghost")){
 			dead = true;
@@ -79,6 +100,33 @@ public class BronsonController: MonoBehaviour {
 				Application.LoadLevel (Application.loadedLevelName);
 			};
 		}
+	}
+	void updateTimers(){
+		if(blastingOff && (Time.time > (lastTime + blastOffTime))){
+			lastTime = Time.time; 
+			setBlastOff(false); 
+		}
+		else if(blastingOff && (Time.time > (lastTime + blastOffTime * 0.5))){
+			forceFall = true; 
+		}
+	}
+	void setBlastOff(bool blast){
+		if(blast){
+			GetComponent<Rigidbody2D>().gravityScale = 0; 
+			lastTime = Time.time; 
+			if(grounded){
+				Jump (); 
+			}
+		}
+		blastingOff = blast; 
+	}
+	void setTweets(int t){
+		if(t == 5){
+			tweets = 0; 
+			setBlastOff(true); 
+			return; 
+		}
+		tweets = t; 	
 	}
 
 	public float xPosition(){ return GetComponent<Rigidbody2D>().position.x;}

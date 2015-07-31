@@ -7,11 +7,14 @@ public class GhostFaceController : MonoBehaviour {
 	public float baseFollowDistance = 4.5f; 
 	private float followDistance = 0; 
 	public float speed = 3.0f; 
+	private float speedModifier = 1.0f; 
 	public int enrageLvl = 0; 
 	private float lastTime; 
 	private int[] angerTimes = {10, 15, 25, 40, 40, 50}; 
 	private float[] distances = {5.0f, 4.0f, 3.0f, 2.0f, 1.5f, .5f}; 
 	private bool following = false; 
+	public bool hangBack = true; 
+	public float smoothTime = 1.0f; 
 	Animator animator; 
 
 	void Start () {
@@ -19,18 +22,15 @@ public class GhostFaceController : MonoBehaviour {
 		animator = GetComponent<Animator>();	
 	}	
 	void Update() {
-		if (following) {
-
-
-		}
 	}
 	// Update is called once per frame
 	void FixedUpdate () {
 		if(following){
-			float newX = followObject.transform.position.x - (baseFollowDistance + followDistance);  
-			Vector2 position = GetComponent<Rigidbody2D> ().position; 
-			position.x = Mathf.Round (newX * 100f) / 100f;
-			GetComponent<Rigidbody2D> ().position = Vector3.MoveTowards(GetComponent<Rigidbody2D> ().position, position, speed * Time.deltaTime);    
+			followDistance = (hangBack) ? 2.0f : 0.0f; 
+			float distance = baseFollowDistance + followDistance;  
+			Vector2 currPosition = transform.position; 
+			currPosition.x = Mathf.Lerp( transform.position.x, followObject.transform.position.x - distance, Time.deltaTime * smoothTime);
+			transform.position = currPosition; 
 			updateTimers(); 
 		}
 		else{
@@ -59,7 +59,7 @@ public class GhostFaceController : MonoBehaviour {
 		updateEnrageLvl(enrageLvl - 1);
 		lastTime = Time.time; 
 	}
-	void updateEnrageLvl(int _enrageLvl){
+	public void updateEnrageLvl(int _enrageLvl){
 		enrageLvl  = _enrageLvl; 
 		switch(enrageLvl){
 			case 0: 

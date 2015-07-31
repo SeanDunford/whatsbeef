@@ -8,6 +8,7 @@ public class Director : MonoBehaviour {
 	public float initialSpeed = 4.0f; 
 	public float lvlSpeedModifier = 0.1f; 
 	public float enrageSpeedModifier = 0.02f; 
+	public int blastOffCount = 5; 
 	int currLvl = 0; 
 
 	// Use this for initialization
@@ -15,7 +16,6 @@ public class Director : MonoBehaviour {
 		GameObject bronBron = GameObject.FindGameObjectWithTag("bronBron"); 
 		bronson = bronBron.GetComponent<BronsonController>(); 
 
-		GameObject[] gFaces = GameObject.FindGameObjectsWithTag("gFace");
 		GameObject gFace = GameObject.FindGameObjectWithTag("gFace"); 
 		ghostFace = gFace.GetComponent<GhostFaceController>(); 
 		ghostFace.setFollowObject(bronBron);
@@ -35,6 +35,8 @@ public class Director : MonoBehaviour {
 		else{
 			generator.generateDTweet = true;
 		}
+		ghostFace.hangBack = bronson.blastingOff; 	
+		ghostFace.speed = bronson.speed; 
 	}
 	void OnGUI(){
 		DisplayEnrageLvl();

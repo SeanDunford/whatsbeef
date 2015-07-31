@@ -65,8 +65,7 @@ public class GeneratorScript : MonoBehaviour {
 			farhtestRoomEndX = Mathf.Max(farhtestRoomEndX, roomEndX);
 		}
 		
-		foreach(var room in roomsToRemove)
-		{
+		foreach(var room in roomsToRemove){
 			currentRooms.Remove(room);
 			Destroy(room);            
 		}
