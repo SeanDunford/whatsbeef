@@ -49,7 +49,7 @@ public class Director : MonoBehaviour {
 		Rect enrageIconRect = new Rect(8, 10, 32, 32);
 		GUIStyle style = new GUIStyle();
 		style.fontSize = 30;
-		style.normal.textColor = Color.red;
+		style.normal.textColor = new Color (0.7803921569f, 0.2549019608f, 0.1882352941f);
 		style.font = myFont;
 
 		Rect labelRect = new Rect(10, enrageIconRect.y, 100, 32);
@@ -65,8 +65,8 @@ public class Director : MonoBehaviour {
 		GUIStyle style = new GUIStyle();
 		style.fontSize = 25;
 		style.font = myFont;
-		style.normal.textColor = Color.blue;
-		
+		style.normal.textColor = new Color(0f, 0.6745098039f, 0.9294117647f);
+
 		Rect labelRect = new Rect(coinIconRect.xMax, coinIconRect.y, 60, 32);
 		GUI.Label(labelRect, "" + bronson.tweets, style);
 	}
