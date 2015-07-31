@@ -7,7 +7,6 @@ public class GhostFaceController : MonoBehaviour {
 	public float baseFollowDistance = 4.5f; 
 	private float followDistance = 0; 
 	public float speed = 3.0f; 
-	private float speedModifier = 1.0f; 
 	public int enrageLvl = 0; 
 	private float lastTime; 
 	private int[] angerTimes = {20, 15, 25, 20, 15, 25}; 
@@ -27,19 +26,15 @@ public class GhostFaceController : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		baseFollowDistance = distances[enrageLvl];
+		followDistance = (hangBack) ? 2.0f : 0.0f; 
 		if(following){
-			followDistance = (hangBack) ? 2.0f : 0.0f; 
-			float distance = baseFollowDistance + followDistance;  
-			Vector2 currPosition = transform.position; 
-			currPosition.x = Mathf.Lerp( transform.position.x, followObject.transform.position.x - distance, Time.deltaTime * smoothTime);
-			transform.position = currPosition; 
-			updateTimers(); 
+			followDistance = -3.0f; 
 		}
-		else{
-			Vector2 newVelocity = GetComponent<Rigidbody2D>().velocity;
-			newVelocity.x = speed + (enrageLvl * 0.01f);
-			GetComponent<Rigidbody2D>().velocity = newVelocity;
-		}
+		float distance = baseFollowDistance + followDistance;  
+		Vector2 currPosition = transform.position; 
+		currPosition.x = Mathf.Lerp( transform.position.x, followObject.transform.position.x - distance, Time.deltaTime * smoothTime);
+		transform.position = currPosition; 
+		updateTimers(); 
 	}
 	void updateTimers(){
 		if(Time.time > lastTime + angerTimes[enrageLvl]){
