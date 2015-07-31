@@ -74,7 +74,7 @@ public class Director : MonoBehaviour {
 	public void decreaseEnrage(){
 		ghostFace.decreaseEnrage(); 
 	}
-
-
-
+	public void blastingOff(){
+		ghostFace.updateEnrageLvl(0); 
+	}	
 }

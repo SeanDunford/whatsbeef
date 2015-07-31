@@ -70,13 +70,11 @@ public class BronsonController: MonoBehaviour {
 		}
 		if (collider.gameObject.CompareTag("dTweet")){
 			Debug.Log("Hit dtweet increase enrage");
-			director.increaseEnrage(); 
 			collider.gameObject.GetComponent<SpriteRenderer>().color = new Color (1f, 1f, 1f, 0); 
 			setTweets(tweets - 1);
 		}
 		else if(collider.gameObject.CompareTag("tweet")){
 			Debug.Log("Hit tweet decrease enrage");
-			director.decreaseEnrage(); 
 			collider.gameObject.GetComponent<SpriteRenderer>().color = new Color (1f, 1f, 1f, 0); 
 			setTweets(tweets + 1); 
 		}
@@ -114,6 +112,7 @@ public class BronsonController: MonoBehaviour {
 		if(blast){
 			GetComponent<Rigidbody2D>().gravityScale = 0; 
 			lastTime = Time.time; 
+			director.blastingOff(); 
 			if(grounded){
 				Jump (); 
 			}

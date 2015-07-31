@@ -10,7 +10,7 @@ public class GhostFaceController : MonoBehaviour {
 	private float speedModifier = 1.0f; 
 	public int enrageLvl = 0; 
 	private float lastTime; 
-	private int[] angerTimes = {10, 15, 25, 40, 40, 50}; 
+	private int[] angerTimes = {20, 15, 25, 20, 15, 25}; 
 	private float[] distances = {5.0f, 4.0f, 3.0f, 2.0f, 1.5f, .5f}; 
 	private bool following = false; 
 	public bool hangBack = true; 
@@ -20,11 +20,13 @@ public class GhostFaceController : MonoBehaviour {
 	void Start () {
 		lastTime = Time.time; 
 		animator = GetComponent<Animator>();	
+		baseFollowDistance = distances[enrageLvl];
 	}	
 	void Update() {
 	}
 	// Update is called once per frame
 	void FixedUpdate () {
+		baseFollowDistance = distances[enrageLvl];
 		if(following){
 			followDistance = (hangBack) ? 2.0f : 0.0f; 
 			float distance = baseFollowDistance + followDistance;  
@@ -61,12 +63,12 @@ public class GhostFaceController : MonoBehaviour {
 	}
 	public void updateEnrageLvl(int _enrageLvl){
 		enrageLvl  = _enrageLvl; 
+		lastTime = Time.time; 
 		switch(enrageLvl){
 			case 0: 
 			case 1: 
 			case 2: 
 				following = true;
-			    baseFollowDistance = distances[enrageLvl];
 				break; 
 			default:
 				following = false;
