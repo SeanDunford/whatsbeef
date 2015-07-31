@@ -10,7 +10,10 @@ public class Director : MonoBehaviour {
 	public float enrageSpeedModifier = 0.02f; 
 	public int blastOffCount = 5; 
 	int currLvl = 0; 
+	public Font myFont;
+	public Texture2D coinIconTexture;
 
+	
 	// Use this for initialization
 	void Start () {
 		GameObject bronBron = GameObject.FindGameObjectWithTag("bronBron"); 
@@ -40,29 +43,34 @@ public class Director : MonoBehaviour {
 	}
 	void OnGUI(){
 		DisplayEnrageLvl();
-		DisplayTweets();
+		DisplayCoinsCount ();
 	}
 	void DisplayEnrageLvl(){
-		Rect enrageIconRect = new Rect(32, 10, 32, 32);
+		Rect enrageIconRect = new Rect(8, 10, 32, 32);
 		GUIStyle style = new GUIStyle();
 		style.fontSize = 30;
-		style.fontStyle = FontStyle.Bold;
 		style.normal.textColor = Color.red;
-		
-		Rect labelRect = new Rect(enrageIconRect.xMax, enrageIconRect.y, 100, 32);
+		style.font = myFont;
+
+		Rect labelRect = new Rect(10, enrageIconRect.y, 100, 32);
 		GUI.Label(labelRect, "Enrage Lvl: " + ghostFace.enrageLvl, style);
 	}
-	
-	void DisplayTweets(){
-		Rect enrageIconRect = new Rect(800, 10, 32, 32);
-		GUIStyle style = new GUIStyle();
-		style.fontSize = 30;
-		style.fontStyle = FontStyle.Bold;
-		style.normal.textColor = new Color(64.0f,153.0f,255.0f);
 
-		Rect labelRect = new Rect(enrageIconRect.xMax, enrageIconRect.y, 100, 32);
-		GUI.Label(labelRect, "Tweet Lvl: " + bronson.tweets, style);
+
+	void DisplayCoinsCount()
+	{
+		Rect coinIconRect = new Rect(930, 10, 32, 32);
+		GUI.DrawTexture(coinIconRect, coinIconTexture);                         
+		
+		GUIStyle style = new GUIStyle();
+		style.fontSize = 25;
+		style.font = myFont;
+		style.normal.textColor = Color.blue;
+		
+		Rect labelRect = new Rect(coinIconRect.xMax, coinIconRect.y, 60, 32);
+		GUI.Label(labelRect, "" + bronson.tweets, style);
 	}
+
 	void updateSpeed(){
 		float speed = initialSpeed + (lvlSpeedModifier * currLvl) + (enrageSpeedModifier * ghostFace.getEnragelvl()); 
 		bronson.speed = speed; 

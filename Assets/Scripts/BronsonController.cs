@@ -9,7 +9,6 @@ public class BronsonController: MonoBehaviour {
 	public float speed = 3.0f;
 	public Transform groundCheckTransform;
 	public LayerMask groundCheckLayerMask;
-	public Texture2D coinIconTexture;
 	public AudioClip coinCollectSound;
 	public AudioSource footstepsAudio;
 	public Director director; 
