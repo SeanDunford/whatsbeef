@@ -17,7 +17,7 @@ public class GeneratorScript : MonoBehaviour {
 	public float objectsMinRotation = -45.0f;
 	public float objectsMaxRotation = 45.0f; 
 	public int lvl = 0; 
-	public bool generateDTweet = false; 
+	public bool generateDTweet = false, bronsonInvincible; 
 
 	void Start () {
 		float height = 2.0f * Camera.main.orthographicSize;
@@ -31,7 +31,9 @@ public class GeneratorScript : MonoBehaviour {
 
 	void FixedUpdate () {
 		GenerateRoomIfRequred();
-		GenerateObjectsIfRequired();    
+		if (!bronsonInvincible) {
+			GenerateObjectsIfRequired ();    
+		}
 	}
 
 

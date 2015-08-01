@@ -20,35 +20,41 @@ public class Director : MonoBehaviour {
 	void Start () {
 		GameObject bronBron = GameObject.FindGameObjectWithTag("bronBron"); 
 		bronson = bronBron.GetComponent<BronsonController>(); 
+		if (!bronson.invincible) {
+			GameObject gFace = GameObject.FindGameObjectWithTag ("gFace"); 
+			ghostFace = gFace.GetComponent<GhostFaceController> (); 
+			ghostFace.setFollowObject (bronBron);
 
-		GameObject gFace = GameObject.FindGameObjectWithTag("gFace"); 
-		ghostFace = gFace.GetComponent<GhostFaceController>(); 
-		ghostFace.setFollowObject(bronBron);
-
-		generator = this.GetComponent<GeneratorScript>(); 
-		maxScore = PlayerPrefs.GetInt("maxScore");
-		InvokeRepeating("AddToScore", 0.0f, 0.2f);
+			generator = this.GetComponent<GeneratorScript> (); 
+			maxScore = PlayerPrefs.GetInt ("maxScore");
+			InvokeRepeating ("AddToScore", 0.0f, 0.2f);
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(generator.lvl > currLvl){
-			currLvl = generator.lvl; 
-			updateSpeed(); 
+		if (!bronson.invincible) {
+			if (generator.lvl > currLvl) {
+				currLvl = generator.lvl; 
+				updateSpeed (); 
+			}
+			if (bronson.tweets == 0) {
+				generator.generateDTweet = false; 
+			} else {
+				generator.generateDTweet = true;
+			}
+			ghostFace.hangBack = bronson.blastingOff; 	
+			ghostFace.speed = bronson.speed; 
 		}
-		if(bronson.tweets == 0){
-			generator.generateDTweet = false; 
-		}
-		else{
-			generator.generateDTweet = true;
-		}
-		ghostFace.hangBack = bronson.blastingOff; 	
-		ghostFace.speed = bronson.speed; 
 	}
 	void OnGUI(){
-		DisplayEnrageLvl ();
-		DisplayTweetCount ();
-		DisplayScore ();
+		if (!bronson.invincible) {
+			DisplayEnrageLvl ();
+			DisplayTweetCount ();
+			DisplayScore ();
+		} else {
+			DisplayMenu();
+		}
 	}
 	void DisplayEnrageLvl(){
 		Rect ghostRect = new Rect(8, Screen.height - 42, 32, 32);
@@ -118,6 +124,41 @@ public class Director : MonoBehaviour {
 			InvokeRepeating ("AddToScore", 0.0f, 0.05f);
 		} else {
 			InvokeRepeating ("AddToScore", 0.0f, 0.2f);
+		}
+	}
+	public void DisplayMenu() {
+		float padding = (Screen.height - (Screen.height * 0.4f + Screen.height * 0.1f) - 20) / 2;
+		float buttonHeight = Screen.height * 0.1f;
+
+		GUIStyle styleHighscore = new GUIStyle ();
+		styleHighscore.fontSize = 80;
+		styleHighscore.normal.textColor = Color.white;
+		styleHighscore.font = myFont;
+		styleHighscore.alignment = TextAnchor.MiddleCenter;
+		Rect labelRect = new Rect (10, padding, Screen.width - 20, Screen.height * 0.4f);
+		GUI.Label (labelRect, "Ghost", styleHighscore);
+		
+		Rect buttonRect = new Rect (Screen.width * 0.3f, padding + 20 + Screen.height * 0.4f, Screen.width * 0.40f, buttonHeight);
+		GUIStyle style = new GUIStyle ();
+		style.fontSize = 20;
+		style.normal.textColor = Color.white;
+		style.font = myFont;
+		style.alignment = TextAnchor.MiddleCenter;
+		
+		Texture2D tex2 = new Texture2D ((int)buttonRect.width, (int)buttonRect.height); 
+		Color fillColor = Color.black;
+		Color[] fillColorArray = tex2.GetPixels ();
+		
+		for (int i = 0; i < fillColorArray.Length; ++i) {
+			fillColorArray [i] = fillColor;
+		}
+		tex2.SetPixels (fillColorArray);
+		tex2.Apply ();
+		style.normal.background = tex2;
+		
+
+		if (GUI.Button (buttonRect, "Tap to Start!", style)) {
+			Application.LoadLevel (1);
 		}
 	}
 }

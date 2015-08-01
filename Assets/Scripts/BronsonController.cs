@@ -17,8 +17,8 @@ public class BronsonController: MonoBehaviour {
 	public bool dead = false;
 	public int tweets = 0;
 	public float blastOffTime = 10; 
-	private bool grounded;
-	private bool forceFall = false; 
+	private bool grounded, forceFall = false; 
+	public bool invincible;
 	Animator animator;
 	public Font myFont;
 
@@ -70,23 +70,22 @@ public class BronsonController: MonoBehaviour {
 		if(blastingOff){
 			return; 
 		}
-		if (collider.gameObject.CompareTag("dTweet")){
-			Debug.Log("Hit dtweet increase enrage");
-			collider.gameObject.GetComponent<SpriteRenderer>().color = new Color (1f, 1f, 1f, 0); 
-			setTweets(tweets - 1);
-		}
-		else if(collider.gameObject.CompareTag("tweet")){
-			Debug.Log("Hit tweet decrease enrage");
-			collider.gameObject.GetComponent<SpriteRenderer>().color = new Color (1f, 1f, 1f, 0); 
-			setTweets(tweets + 1); 
-		}
-		else if(collider.gameObject.CompareTag("ghost")){
-			dead = true;
-			animator.SetBool("dead", true);
-		}
-		else if(collider.gameObject.CompareTag("gFace")){
-			dead = true;
-			animator.SetBool("dead", true);
+		if (!invincible) {
+			if (collider.gameObject.CompareTag ("dTweet")) {
+				Debug.Log ("Hit dtweet increase enrage");
+				collider.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0); 
+				setTweets (tweets - 1);
+			} else if (collider.gameObject.CompareTag ("tweet")) {
+				Debug.Log ("Hit tweet decrease enrage");
+				collider.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0); 
+				setTweets (tweets + 1); 
+			} else if (collider.gameObject.CompareTag ("ghost")) {
+				dead = true;
+				animator.SetBool ("dead", true);
+			} else if (collider.gameObject.CompareTag ("gFace")) {
+				dead = true;
+				animator.SetBool ("dead", true);
+			}
 		}
 	}
 	void OnGUI(){
@@ -129,7 +128,7 @@ public class BronsonController: MonoBehaviour {
 		
 
 			if (GUI.Button(buttonRect, "Tap to restart!", style)){
-				Application.LoadLevel (Application.loadedLevelName);
+				Application.LoadLevel (1);
 			};
 		}
 	}
@@ -152,7 +151,7 @@ public class BronsonController: MonoBehaviour {
 		blastingOff = blast; 
 	}
 	void setTweets(int t){
-		if(t >= 2){
+		if(t >= 4){
 			tweets = 0; 
 			setBlastOff(true); 
 			return; 
