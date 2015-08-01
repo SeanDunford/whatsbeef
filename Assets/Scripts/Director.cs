@@ -11,7 +11,7 @@ public class Director : MonoBehaviour {
 	public int blastOffCount = 5; 
 	int currLvl = 0; 
 	public Font myFont;
-	public Texture2D coinIconTexture;
+	public Texture2D tweetTexture, ghostTexture;
 
 	
 	// Use this for initialization
@@ -46,28 +46,39 @@ public class Director : MonoBehaviour {
 		DisplayCoinsCount ();
 	}
 	void DisplayEnrageLvl(){
-		Rect enrageIconRect = new Rect(8, 10, 32, 32);
-		GUIStyle style = new GUIStyle();
-		style.fontSize = 30;
-		style.normal.textColor = new Color (0.7803921569f, 0.2549019608f, 0.1882352941f);
-		style.font = myFont;
+//		Rect enrageIconRect = new Rect(8, Screen.height - 42, 32, 32);
+//		GUIStyle style = new GUIStyle();
+//		style.fontSize = 30;
+//		style.normal.textColor = new Color (0.7803921569f, 0.2549019608f, 0.1882352941f);
+//		style.font = myFont;
 
-		Rect labelRect = new Rect(10, enrageIconRect.y, 100, 32);
-		GUI.Label(labelRect, "Enrage Lvl: " + ghostFace.enrageLvl, style);
+//		Rect labelRect = new Rect(10, enrageIconRect.y, 100, 32);
+//		GUI.Label(labelRect, "Enrage: " + ghostFace.enrageLvl, style);
+
+		Rect ghostRect = new Rect(8, Screen.height - 42, 32, 32);
+		GUI.DrawTexture(ghostRect, ghostTexture);                         
+		
+		GUIStyle style = new GUIStyle();
+		style.fontSize = 25;
+		style.font = myFont;
+		style.normal.textColor = new Color (0.7803921569f, 0.2549019608f, 0.1882352941f);
+		
+		Rect labelRect = new Rect(ghostRect.xMax, ghostRect.y + 4, 60, 32);
+		GUI.Label(labelRect, "" + ghostFace.enrageLvl, style);
 	}
 
 
 	void DisplayCoinsCount()
 	{
-		Rect coinIconRect = new Rect(930, 10, 32, 32);
-		GUI.DrawTexture(coinIconRect, coinIconTexture);                         
+		Rect tweetRect = new Rect(Screen.width - 70, Screen.height - 42, 32, 32);
+		GUI.DrawTexture(tweetRect, tweetTexture);                         
 		
 		GUIStyle style = new GUIStyle();
 		style.fontSize = 25;
 		style.font = myFont;
 		style.normal.textColor = new Color(0f, 0.6745098039f, 0.9294117647f);
 
-		Rect labelRect = new Rect(coinIconRect.xMax, coinIconRect.y, 60, 32);
+		Rect labelRect = new Rect(tweetRect.xMax, tweetRect.y + 4, 60, 32);
 		GUI.Label(labelRect, "" + bronson.tweets, style);
 	}
 

@@ -374,7 +374,8 @@ MonoBehaviour:
   enrageSpeedModifier: .0199999996
   blastOffCount: 5
   myFont: {fileID: 12800000, guid: 6d6a73f8f08494cb081bbc6a48bcbd60, type: 3}
-  coinIconTexture: {fileID: 2800000, guid: 4c5b9a1b04ed341cc8712645e06ceb85, type: 3}
+  tweetTexture: {fileID: 2800000, guid: 4c5b9a1b04ed341cc8712645e06ceb85, type: 3}
+  ghostTexture: {fileID: 2800000, guid: 2811f470fd923487ea714070d05ee9b2, type: 3}
 --- !u!114 &1408192187
 MonoBehaviour:
   m_ObjectHideFlags: 0
