@@ -623,6 +623,7 @@ MonoBehaviour:
   level: 0
   tweets: 0
   blastOffTime: 10
+  myFont: {fileID: 12800000, guid: 6d6a73f8f08494cb081bbc6a48bcbd60, type: 3}
 --- !u!50 &1490126290
 Rigidbody2D:
   serializedVersion: 2

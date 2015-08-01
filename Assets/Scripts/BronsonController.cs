@@ -20,7 +20,8 @@ public class BronsonController: MonoBehaviour {
 	private bool grounded;
 	private bool forceFall = false; 
 	Animator animator;
-	
+	public Font myFont;
+
 	// Use this for initialization
 	void Start () {
 		animator = GetComponent<Animator>();	
@@ -89,11 +90,30 @@ public class BronsonController: MonoBehaviour {
 	void OnGUI(){
 		DisplayRestartButton();
 	}
-	
+
 	void DisplayRestartButton(){
 		if (dead && grounded){
 			Rect buttonRect = new Rect(Screen.width * 0.35f, Screen.height * 0.45f, Screen.width * 0.30f, Screen.height * 0.1f);
-			if (GUI.Button(buttonRect, "Tap to restart!")){
+			GUIStyle style = new GUIStyle();
+			style.fontSize = 20;
+			style.normal.textColor = Color.white;
+			style.font = myFont;
+			style.alignment = TextAnchor.MiddleCenter;
+
+			Texture2D tex2 = new Texture2D((int)buttonRect.width, (int)buttonRect.height); 
+			Color fillColor = Color.black;
+			Color[] fillColorArray =  tex2.GetPixels();
+			
+			for(int i = 0; i < fillColorArray.Length; ++i) {
+				fillColorArray[i] = fillColor;
+			}
+			
+			tex2.SetPixels(fillColorArray);
+			tex2.Apply();
+			style.normal.background = tex2;
+
+
+			if (GUI.Button(buttonRect, "Tap to restart!", style)){
 				Application.LoadLevel (Application.loadedLevelName);
 			};
 		}

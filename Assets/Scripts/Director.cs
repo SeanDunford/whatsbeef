@@ -42,19 +42,11 @@ public class Director : MonoBehaviour {
 		ghostFace.speed = bronson.speed; 
 	}
 	void OnGUI(){
-		DisplayEnrageLvl();
-		DisplayCoinsCount ();
+		DisplayEnrageLvl ();
+		DisplayTweetCount ();
+		DisplayScore ();
 	}
 	void DisplayEnrageLvl(){
-//		Rect enrageIconRect = new Rect(8, Screen.height - 42, 32, 32);
-//		GUIStyle style = new GUIStyle();
-//		style.fontSize = 30;
-//		style.normal.textColor = new Color (0.7803921569f, 0.2549019608f, 0.1882352941f);
-//		style.font = myFont;
-
-//		Rect labelRect = new Rect(10, enrageIconRect.y, 100, 32);
-//		GUI.Label(labelRect, "Enrage: " + ghostFace.enrageLvl, style);
-
 		Rect ghostRect = new Rect(8, Screen.height - 42, 32, 32);
 		GUI.DrawTexture(ghostRect, ghostTexture);                         
 		
@@ -68,8 +60,7 @@ public class Director : MonoBehaviour {
 	}
 
 
-	void DisplayCoinsCount()
-	{
+	void DisplayTweetCount() {
 		Rect tweetRect = new Rect(Screen.width - 70, Screen.height - 42, 32, 32);
 		GUI.DrawTexture(tweetRect, tweetTexture);                         
 		
@@ -80,6 +71,18 @@ public class Director : MonoBehaviour {
 
 		Rect labelRect = new Rect(tweetRect.xMax, tweetRect.y + 4, 60, 32);
 		GUI.Label(labelRect, "" + bronson.tweets, style);
+	}
+
+	void DisplayScore() {
+		GUIStyle style = new GUIStyle();
+		style.fontSize = 40;
+		style.normal.textColor = new Color (0.7803921569f, 0.2549019608f, 0.1882352941f);
+		style.font = myFont;
+		style.alignment = TextAnchor.MiddleCenter;
+
+
+		Rect labelRect = new Rect(10, 10, Screen.width - 20, 40);
+		GUI.Label(labelRect, "Distance: " + 10m, style);
 	}
 
 	void updateSpeed(){
