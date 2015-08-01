@@ -49,11 +49,13 @@ public class Director : MonoBehaviour {
 	}
 	void OnGUI(){
 		if (!bronson.invincible) {
-			DisplayEnrageLvl ();
-			DisplayTweetCount ();
-			DisplayScore ();
+			if (!bronson.dead) {
+				DisplayEnrageLvl ();
+				DisplayTweetCount ();
+				DisplayScore ();
+			}
 		} else {
-			DisplayMenu();
+//			DisplayMenu();
 		}
 	}
 	void DisplayEnrageLvl(){
@@ -63,7 +65,7 @@ public class Director : MonoBehaviour {
 		GUIStyle style = new GUIStyle();
 		style.fontSize = 25;
 		style.font = myFont;
-		style.normal.textColor = new Color (0.7803921569f, 0.2549019608f, 0.1882352941f);
+		style.normal.textColor = new Color (241f/255f, 50f/255f, 36f/255f);
 		
 		Rect labelRect = new Rect(ghostRect.xMax, ghostRect.y + 4, 60, 32);
 		GUI.Label(labelRect, "" + ghostFace.enrageLvl, style);
@@ -85,8 +87,8 @@ public class Director : MonoBehaviour {
 
 	void DisplayScore() {
 		GUIStyle style = new GUIStyle();
-		style.fontSize = 40;
-		style.normal.textColor = new Color (0.7803921569f, 0.2549019608f, 0.1882352941f);
+		style.fontSize = 30;
+		style.normal.textColor = Color.white;
 		style.font = myFont;
 		style.alignment = TextAnchor.MiddleCenter;
 

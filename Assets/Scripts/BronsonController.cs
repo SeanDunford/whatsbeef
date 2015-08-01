@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BronsonController: MonoBehaviour {
 
-	public float jumpForce = 1500.0f;
+	public float jumpForce = 175.0f;
 	public float blastForce = 10.0f; 
 	public bool blastingOff = false; 
 	public float speed = 5.0f;
@@ -71,21 +71,21 @@ public class BronsonController: MonoBehaviour {
 			return; 
 		}
 		if (!invincible) {
-			if (collider.gameObject.CompareTag ("dTweet")) {
-				Debug.Log ("Hit dtweet increase enrage");
-				collider.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0); 
-				setTweets (tweets - 1);
-			} else if (collider.gameObject.CompareTag ("tweet")) {
-				Debug.Log ("Hit tweet decrease enrage");
-				collider.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0); 
-				setTweets (tweets + 1); 
-			} else if (collider.gameObject.CompareTag ("ghost")) {
-				dead = true;
-				animator.SetBool ("dead", true);
-			} else if (collider.gameObject.CompareTag ("gFace")) {
-				dead = true;
-				animator.SetBool ("dead", true);
-			}
+//			if (collider.gameObject.CompareTag ("dTweet")) {
+//				Debug.Log ("Hit dtweet increase enrage");
+//				collider.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0); 
+//				setTweets (tweets - 1);
+//			} else if (collider.gameObject.CompareTag ("tweet")) {
+//				Debug.Log ("Hit tweet decrease enrage");
+//				collider.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0); 
+//				setTweets (tweets + 1); 
+//			} else if (collider.gameObject.CompareTag ("ghost")) {
+//				dead = true;
+//				animator.SetBool ("dead", true);
+//			} else if (collider.gameObject.CompareTag ("gFace")) {
+//				dead = true;
+//				animator.SetBool ("dead", true);
+//			}
 		}
 	}
 	void OnGUI(){
@@ -99,7 +99,7 @@ public class BronsonController: MonoBehaviour {
 			float maxScore = director.maxScore;
 
 			GUIStyle styleHighscore = new GUIStyle();
-			styleHighscore.fontSize = 30;
+			styleHighscore.fontSize = 25;
 			styleHighscore.normal.textColor = Color.white;
 			styleHighscore.font = myFont;
 			styleHighscore.alignment = TextAnchor.MiddleCenter;
@@ -151,7 +151,7 @@ public class BronsonController: MonoBehaviour {
 		blastingOff = blast; 
 	}
 	void setTweets(int t){
-		if(t >= 4){
+		if(t >= 5){
 			tweets = 0; 
 			setBlastOff(true); 
 			return; 

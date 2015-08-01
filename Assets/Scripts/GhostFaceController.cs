@@ -10,7 +10,7 @@ public class GhostFaceController : MonoBehaviour {
 	private float speedModifier = 1.0f; 
 	public int enrageLvl = 0; 
 	private float lastTime; 
-	private int[] angerTimes = {20, 15, 25, 20, 15, 25}; 
+	private int[] angerTimes = {5, 10, 10, 10, 15, 20}; //{20, 15, 25, 20, 15, 25}; 
 	private float[] distances = {5.0f, 4.0f, 3.0f, 2.0f, 1.5f, .5f}; 
 	private bool following = false; 
 	public bool hangBack = true; 
