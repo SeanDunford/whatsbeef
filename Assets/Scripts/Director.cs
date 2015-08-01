@@ -5,7 +5,7 @@ public class Director : MonoBehaviour {
 	BronsonController bronson; 
 	GhostFaceController ghostFace; 
 	GeneratorScript generator; 
-	public float initialSpeed = 4.0f; 
+	public float initialSpeed = 5.0f; 
 	public float lvlSpeedModifier = 0.1f; 
 	public float enrageSpeedModifier = 0.02f; 
 	public int blastOffCount = 5; 
@@ -27,7 +27,6 @@ public class Director : MonoBehaviour {
 
 		generator = this.GetComponent<GeneratorScript>(); 
 		maxScore = PlayerPrefs.GetInt("maxScore");
-
 		InvokeRepeating("AddToScore", 0.0f, 0.2f);
 	}
 	
@@ -113,5 +112,12 @@ public class Director : MonoBehaviour {
 			}
 		}
 	}
-
+	public void blastingOff(bool blast) {
+		CancelInvoke ("AddToScore");
+		if (blast) {
+			InvokeRepeating ("AddToScore", 0.0f, 0.05f);
+		} else {
+			InvokeRepeating ("AddToScore", 0.0f, 0.2f);
+		}
+	}
 }

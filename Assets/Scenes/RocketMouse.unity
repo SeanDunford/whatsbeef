@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b77f14cf7b42450fbdd17f99100aa13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialSpeed: 4
+  initialSpeed: 5
   lvlSpeedModifier: .100000001
   enrageSpeedModifier: .0199999996
   blastOffCount: 5
@@ -616,7 +616,7 @@ MonoBehaviour:
   jumpForce: 250
   blastForce: 10
   blastingOff: 0
-  speed: 3
+  speed: 5
   groundCheckTransform: {fileID: 967971003}
   groundCheckLayerMask:
     serializedVersion: 2
@@ -627,7 +627,7 @@ MonoBehaviour:
   level: 0
   dead: 0
   tweets: 0
-  blastOffTime: 10
+  blastOffTime: 4
   myFont: {fileID: 12800000, guid: 6d6a73f8f08494cb081bbc6a48bcbd60, type: 3}
 --- !u!50 &1490126290
 Rigidbody2D:

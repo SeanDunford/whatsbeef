@@ -6,7 +6,7 @@ public class BronsonController: MonoBehaviour {
 	public float jumpForce = 1500.0f;
 	public float blastForce = 10.0f; 
 	public bool blastingOff = false; 
-	public float speed = 3.0f;
+	public float speed = 5.0f;
 	public Transform groundCheckTransform;
 	public LayerMask groundCheckLayerMask;
 	public AudioClip coinCollectSound;
@@ -22,6 +22,7 @@ public class BronsonController: MonoBehaviour {
 	Animator animator;
 	public Font myFont;
 
+
 	// Use this for initialization
 	void Start () {
 		animator = GetComponent<Animator>();	
@@ -33,6 +34,7 @@ public class BronsonController: MonoBehaviour {
 	void Update () {
 			
 	}
+
 	void Jump(){
 		GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
 	}
@@ -135,24 +137,22 @@ public class BronsonController: MonoBehaviour {
 		if(blastingOff && (Time.time > (lastTime + blastOffTime))){
 			lastTime = Time.time; 
 			setBlastOff(false); 
-		}
-		else if(blastingOff && (Time.time > (lastTime + blastOffTime * 0.5))){
 			forceFall = true; 
 		}
 	}
 	void setBlastOff(bool blast){
-		if(blast){
-			GetComponent<Rigidbody2D>().gravityScale = 0; 
+		if (blast) {
+			director.blastingOff (blast);
 			lastTime = Time.time; 
-			director.blastingOff(); 
-			if(grounded){
-				Jump (); 
-			}
+			director.blastingOff (); 
+		} else {
+			director.blastingOff (blast);
 		}
+
 		blastingOff = blast; 
 	}
 	void setTweets(int t){
-		if(t == 5){
+		if(t >= 2){
 			tweets = 0; 
 			setBlastOff(true); 
 			return; 
