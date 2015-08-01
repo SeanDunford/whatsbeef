@@ -12,8 +12,10 @@ public class Director : MonoBehaviour {
 	int currLvl = 0; 
 	public Font myFont;
 	public Texture2D tweetTexture, ghostTexture;
+	public int score = 0, maxScore;
+	public string scoreText = "Distance: 0m";
+	public bool dead = false;
 
-	
 	// Use this for initialization
 	void Start () {
 		GameObject bronBron = GameObject.FindGameObjectWithTag("bronBron"); 
@@ -24,6 +26,9 @@ public class Director : MonoBehaviour {
 		ghostFace.setFollowObject(bronBron);
 
 		generator = this.GetComponent<GeneratorScript>(); 
+		maxScore = PlayerPrefs.GetInt("maxScore");
+
+		InvokeRepeating("AddToScore", 0.0f, 0.2f);
 	}
 	
 	// Update is called once per frame
@@ -80,9 +85,8 @@ public class Director : MonoBehaviour {
 		style.font = myFont;
 		style.alignment = TextAnchor.MiddleCenter;
 
-
 		Rect labelRect = new Rect(10, 10, Screen.width - 20, 40);
-		GUI.Label(labelRect, "Distance: " + 10m, style);
+		GUI.Label(labelRect, scoreText, style);
 	}
 
 	void updateSpeed(){
@@ -99,4 +103,15 @@ public class Director : MonoBehaviour {
 	public void blastingOff(){
 		ghostFace.updateEnrageLvl(0); 
 	}	
+	public void AddToScore () {
+		if (!bronson.dead) {
+			score++;
+			scoreText = "Distance: " + score + "m";
+			if (score > maxScore) {
+				maxScore = score;
+				PlayerPrefs.SetInt("maxScore", maxScore);
+			}
+		}
+	}
+
 }

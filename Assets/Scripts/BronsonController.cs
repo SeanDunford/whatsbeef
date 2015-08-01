@@ -14,7 +14,7 @@ public class BronsonController: MonoBehaviour {
 	public Director director; 
 	public int level; 
 	private float lastTime; 
-	private bool dead = false;
+	public bool dead = false;
 	public int tweets = 0;
 	public float blastOffTime = 10; 
 	private bool grounded;
@@ -93,7 +93,19 @@ public class BronsonController: MonoBehaviour {
 
 	void DisplayRestartButton(){
 		if (dead && grounded){
-			Rect buttonRect = new Rect(Screen.width * 0.35f, Screen.height * 0.45f, Screen.width * 0.30f, Screen.height * 0.1f);
+			float padding = (Screen.height - (2 * Screen.height * 0.1f) - 20) / 2;
+			float buttonHeight = Screen.height * 0.1f;
+			float maxScore = director.maxScore;
+
+			GUIStyle styleHighscore = new GUIStyle();
+			styleHighscore.fontSize = 30;
+			styleHighscore.normal.textColor = Color.white;
+			styleHighscore.font = myFont;
+			styleHighscore.alignment = TextAnchor.MiddleCenter;
+			Rect labelRect = new Rect(10, padding, Screen.width - 20, buttonHeight);
+			GUI.Label(labelRect, "High Score: " + maxScore + "m", styleHighscore);
+
+			Rect buttonRect = new Rect(Screen.width * 0.3f, padding + 20 + buttonHeight, Screen.width * 0.40f, buttonHeight);
 			GUIStyle style = new GUIStyle();
 			style.fontSize = 20;
 			style.normal.textColor = Color.white;
@@ -112,6 +124,7 @@ public class BronsonController: MonoBehaviour {
 			tex2.Apply();
 			style.normal.background = tex2;
 
+		
 
 			if (GUI.Button(buttonRect, "Tap to restart!", style)){
 				Application.LoadLevel (Application.loadedLevelName);
