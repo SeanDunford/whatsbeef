@@ -129,7 +129,7 @@ public class Director : MonoBehaviour {
 		}
 	}
 	public void DisplayMenu() {
-		float padding = (Screen.height - (menuTexture.height + Screen.height * 0.1f) - 20) / 2;
+		float padding = (Screen.height - (Screen.width * 0.2885416667f + Screen.height * 0.1f)) / 3;
 		float buttonHeight = Screen.height * 0.1f;
 
 
@@ -142,7 +142,7 @@ public class Director : MonoBehaviour {
 		GUI.DrawTexture(labelRect, menuTexture);                         
 
 		
-		Rect buttonRect = new Rect (Screen.width * 0.3f, padding + 20 + menuTexture.height, Screen.width * 0.40f, buttonHeight);
+		Rect buttonRect = new Rect (Screen.width * 0.3f, labelRect.y + labelRect.height +  padding, Screen.width * 0.40f, buttonHeight);
 		GUIStyle style = new GUIStyle ();
 		style.fontSize = 20;
 		style.normal.textColor = Color.white;
