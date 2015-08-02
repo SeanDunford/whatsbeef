@@ -98,7 +98,7 @@ public class BronsonController: MonoBehaviour {
 			float maxScore = director.maxScore;
 
 			GUIStyle styleHighscore = new GUIStyle();
-			styleHighscore.fontSize = 25;
+			styleHighscore.fontSize = 24;
 			styleHighscore.normal.textColor = Color.white;
 			styleHighscore.font = myFont;
 			styleHighscore.alignment = TextAnchor.MiddleCenter;
