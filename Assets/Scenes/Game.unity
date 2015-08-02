@@ -376,6 +376,7 @@ MonoBehaviour:
   myFont: {fileID: 12800000, guid: 6d6a73f8f08494cb081bbc6a48bcbd60, type: 3}
   tweetTexture: {fileID: 2800000, guid: 4c5b9a1b04ed341cc8712645e06ceb85, type: 3}
   ghostTexture: {fileID: 2800000, guid: 2811f470fd923487ea714070d05ee9b2, type: 3}
+  menuTexture: {fileID: 0}
   score: 0
   maxScore: 0
   scoreText: 'Distance: 0m'
@@ -561,9 +562,6 @@ MonoBehaviour:
   blastOffTime: 4
   invincible: 0
   myFont: {fileID: 12800000, guid: 6d6a73f8f08494cb081bbc6a48bcbd60, type: 3}
-  loops:
-  - {fileID: 8300000, guid: 36f06d8e2e6c842f2bf5dfdc2d04df66, type: 3}
-  - {fileID: 8300000, guid: 4ab83816273bb4bcaa1ccad999c29231, type: 3}
 --- !u!50 &1490126290
 Rigidbody2D:
   serializedVersion: 2

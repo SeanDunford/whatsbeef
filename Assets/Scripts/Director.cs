@@ -11,7 +11,7 @@ public class Director : MonoBehaviour {
 	public int blastOffCount = 5; 
 	int currLvl = 0; 
 	public Font myFont;
-	public Texture2D tweetTexture, ghostTexture;
+	public Texture2D tweetTexture, ghostTexture, menuTexture;
 	public int score = 0, maxScore;
 	public string scoreText = "Distance: 0m";
 	public bool dead = false;
@@ -129,18 +129,20 @@ public class Director : MonoBehaviour {
 		}
 	}
 	public void DisplayMenu() {
-		float padding = (Screen.height - (Screen.height * 0.4f + Screen.height * 0.1f) - 20) / 2;
+		float padding = (Screen.height - (menuTexture.height + Screen.height * 0.1f) - 20) / 2;
 		float buttonHeight = Screen.height * 0.1f;
+
 
 		GUIStyle styleHighscore = new GUIStyle ();
 		styleHighscore.fontSize = 80;
 		styleHighscore.normal.textColor = Color.white;
 		styleHighscore.font = myFont;
 		styleHighscore.alignment = TextAnchor.MiddleCenter;
-		Rect labelRect = new Rect (10, padding, Screen.width - 20, Screen.height * 0.4f);
-		GUI.Label (labelRect, "Ghost", styleHighscore);
+		Rect labelRect = new Rect (0, padding, Screen.width, Screen.width * 0.2885416667f);
+		GUI.DrawTexture(labelRect, menuTexture);                         
+
 		
-		Rect buttonRect = new Rect (Screen.width * 0.3f, padding + 20 + Screen.height * 0.4f, Screen.width * 0.40f, buttonHeight);
+		Rect buttonRect = new Rect (Screen.width * 0.3f, padding + 20 + menuTexture.height, Screen.width * 0.40f, buttonHeight);
 		GUIStyle style = new GUIStyle ();
 		style.fontSize = 20;
 		style.normal.textColor = Color.white;
