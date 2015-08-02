@@ -22,7 +22,6 @@ public class BronsonController: MonoBehaviour {
 	Animator animator;
 	public Font myFont;
 
-
 	// Use this for initialization
 	void Start () {
 		animator = GetComponent<Animator>();	
@@ -32,7 +31,7 @@ public class BronsonController: MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-			
+
 	}
 
 	void Jump(){
@@ -71,21 +70,21 @@ public class BronsonController: MonoBehaviour {
 			return; 
 		}
 		if (!invincible) {
-//			if (collider.gameObject.CompareTag ("dTweet")) {
-//				Debug.Log ("Hit dtweet increase enrage");
-//				collider.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0); 
-//				setTweets (tweets - 1);
-//			} else if (collider.gameObject.CompareTag ("tweet")) {
-//				Debug.Log ("Hit tweet decrease enrage");
-//				collider.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0); 
-//				setTweets (tweets + 1); 
-//			} else if (collider.gameObject.CompareTag ("ghost")) {
-//				dead = true;
-//				animator.SetBool ("dead", true);
-//			} else if (collider.gameObject.CompareTag ("gFace")) {
-//				dead = true;
-//				animator.SetBool ("dead", true);
-//			}
+			if (collider.gameObject.CompareTag ("dTweet")) {
+				Debug.Log ("Hit dtweet increase enrage");
+				collider.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0); 
+				setTweets (tweets - 1);
+			} else if (collider.gameObject.CompareTag ("tweet")) {
+				Debug.Log ("Hit tweet decrease enrage");
+				collider.gameObject.GetComponent<SpriteRenderer> ().color = new Color (1f, 1f, 1f, 0); 
+				setTweets (tweets + 1); 
+			} else if (collider.gameObject.CompareTag ("ghost")) {
+				dead = true;
+				animator.SetBool ("dead", true);
+			} else if (collider.gameObject.CompareTag ("gFace")) {
+				dead = true;
+				animator.SetBool ("dead", true);
+			}
 		}
 	}
 	void OnGUI(){

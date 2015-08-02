@@ -55,7 +55,7 @@ public class Director : MonoBehaviour {
 				DisplayScore ();
 			}
 		} else {
-//			DisplayMenu();
+			DisplayMenu();
 		}
 	}
 	void DisplayEnrageLvl(){
