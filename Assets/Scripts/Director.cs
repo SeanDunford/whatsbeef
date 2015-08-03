@@ -11,13 +11,16 @@ public class Director : MonoBehaviour {
 	public int blastOffCount = 5; 
 	int currLvl = 0; 
 	public Font myFont;
-	public Texture2D tweetTexture, ghostTexture, menuTexture, instructionsTexture;
+	public Texture2D tweetTexture, ghostTexture, 
+					menuTexture, instructionsTexture, spTexture;
 	public int score = 0, maxScore;
 	public string scoreText = "Distance: 0m";
 	public bool dead = false;
+	private double startTime;
 
 	// Use this for initialization
 	void Start () {
+		startTime = Time.time;
 		GameObject bronBron = GameObject.FindGameObjectWithTag("bronBron"); 
 		bronson = bronBron.GetComponent<BronsonController>(); 
 		if (!bronson.invincible) {
@@ -129,6 +132,7 @@ public class Director : MonoBehaviour {
 		}
 	}
 	public void DisplayMenu() {
+		
 		float padding = (Screen.height - (Screen.width * 0.2885416667f + Screen.height * 0.1f)) / 3;
 		float buttonHeight = Screen.height * 0.1f;
 
@@ -158,8 +162,13 @@ public class Director : MonoBehaviour {
 		GUI.DrawTexture(labelInst, instructionsTexture);                         
 
 
-		if (GUI.Button (buttonRect, "Tap to Start!", style)) {
-			Application.LoadLevel (1);
+		if (Time.time >= startTime + 4) {
+			if (GUI.Button (buttonRect, "Tap to Start!", style)) {
+				Application.LoadLevel (1);
+			}
+		} else {
+			Rect labelSP = new Rect (0, 0, Screen.width, Screen.height);
+			GUI.DrawTexture(labelSP, spTexture);                         
 		}
 	}
 }
