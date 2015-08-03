@@ -378,7 +378,7 @@ MonoBehaviour:
   ghostTexture: {fileID: 2800000, guid: 2811f470fd923487ea714070d05ee9b2, type: 3}
   menuTexture: {fileID: 2800000, guid: 26312cc7884ad4c0a80f1feb6f113411, type: 3}
   instructionsTexture: {fileID: 2800000, guid: c815b5b1f4e8f445c8db78d5f4caa239, type: 3}
-  spTexture: {fileID: 2800000, guid: b6202a50c89594682b209946dcb79363, type: 3}
+  spTexture: {fileID: 2800000, guid: bb00e7e6ccf1e412f839c71e0fc9cee2, type: 3}
   score: 0
   maxScore: 0
   scoreText: 'Distance: 0m'
