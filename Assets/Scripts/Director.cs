@@ -5,70 +5,95 @@ public class Director : MonoBehaviour {
 	BronsonController bronson; 
 	GhostFaceController ghostFace; 
 	GeneratorScript generator; 
-	public float initialSpeed = 4.0f; 
+	public float initialSpeed = 5.0f; 
 	public float lvlSpeedModifier = 0.1f; 
 	public float enrageSpeedModifier = 0.02f; 
 	public int blastOffCount = 5; 
 	int currLvl = 0; 
 	public Font myFont;
-	public Texture2D coinIconTexture;
+	public Texture2D tweetTexture, ghostTexture, menuTexture;
+	public int score = 0, maxScore;
+	public string scoreText = "Distance: 0m";
+	public bool dead = false;
 
-	
 	// Use this for initialization
 	void Start () {
 		GameObject bronBron = GameObject.FindGameObjectWithTag("bronBron"); 
 		bronson = bronBron.GetComponent<BronsonController>(); 
+		if (!bronson.invincible) {
+			GameObject gFace = GameObject.FindGameObjectWithTag ("gFace"); 
+			ghostFace = gFace.GetComponent<GhostFaceController> (); 
+			ghostFace.setFollowObject (bronBron);
 
-		GameObject gFace = GameObject.FindGameObjectWithTag("gFace"); 
-		ghostFace = gFace.GetComponent<GhostFaceController>(); 
-		ghostFace.setFollowObject(bronBron);
-
-		generator = this.GetComponent<GeneratorScript>(); 
+			generator = this.GetComponent<GeneratorScript> (); 
+			maxScore = PlayerPrefs.GetInt ("maxScore");
+			InvokeRepeating ("AddToScore", 0.0f, 0.2f);
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(generator.lvl > currLvl){
-			currLvl = generator.lvl; 
-			updateSpeed(); 
+		if (!bronson.invincible) {
+			if (generator.lvl > currLvl) {
+				currLvl = generator.lvl; 
+				updateSpeed (); 
+			}
+			if (bronson.tweets == 0) {
+				generator.generateDTweet = false; 
+			} else {
+				generator.generateDTweet = true;
+			}
+			ghostFace.hangBack = bronson.blastingOff; 	
+			ghostFace.speed = bronson.speed; 
 		}
-		if(bronson.tweets == 0){
-			generator.generateDTweet = false; 
-		}
-		else{
-			generator.generateDTweet = true;
-		}
-		ghostFace.hangBack = bronson.blastingOff; 	
-		ghostFace.speed = bronson.speed; 
 	}
 	void OnGUI(){
-		DisplayEnrageLvl();
-		DisplayCoinsCount ();
+		if (!bronson.invincible) {
+			if (!bronson.dead) {
+				DisplayEnrageLvl ();
+				DisplayTweetCount ();
+				DisplayScore ();
+			}
+		} else {
+			DisplayMenu();
+		}
 	}
 	void DisplayEnrageLvl(){
-		Rect enrageIconRect = new Rect(8, 10, 32, 32);
+		Rect ghostRect = new Rect(8, Screen.height - 42, 32, 32);
+		GUI.DrawTexture(ghostRect, ghostTexture);                         
+		
 		GUIStyle style = new GUIStyle();
-		style.fontSize = 30;
-		style.normal.textColor = new Color (0.7803921569f, 0.2549019608f, 0.1882352941f);
+		style.fontSize = 25;
 		style.font = myFont;
-
-		Rect labelRect = new Rect(10, enrageIconRect.y, 100, 32);
-		GUI.Label(labelRect, "Enrage Lvl: " + ghostFace.enrageLvl, style);
+		style.normal.textColor = new Color (241f/255f, 50f/255f, 36f/255f);
+		
+		Rect labelRect = new Rect(ghostRect.xMax, ghostRect.y + 4, 60, 32);
+		GUI.Label(labelRect, "" + ghostFace.enrageLvl, style);
 	}
 
 
-	void DisplayCoinsCount()
-	{
-		Rect coinIconRect = new Rect(930, 10, 32, 32);
-		GUI.DrawTexture(coinIconRect, coinIconTexture);                         
+	void DisplayTweetCount() {
+		Rect tweetRect = new Rect(Screen.width - 70, Screen.height - 42, 32, 32);
+		GUI.DrawTexture(tweetRect, tweetTexture);                         
 		
 		GUIStyle style = new GUIStyle();
 		style.fontSize = 25;
 		style.font = myFont;
 		style.normal.textColor = new Color(0f, 0.6745098039f, 0.9294117647f);
 
-		Rect labelRect = new Rect(coinIconRect.xMax, coinIconRect.y, 60, 32);
+		Rect labelRect = new Rect(tweetRect.xMax, tweetRect.y + 4, 60, 32);
 		GUI.Label(labelRect, "" + bronson.tweets, style);
+	}
+
+	void DisplayScore() {
+		GUIStyle style = new GUIStyle();
+		style.fontSize = 30;
+		style.normal.textColor = Color.white;
+		style.font = myFont;
+		style.alignment = TextAnchor.MiddleCenter;
+
+		Rect labelRect = new Rect(10, 10, Screen.width - 20, 40);
+		GUI.Label(labelRect, scoreText, style);
 	}
 
 	void updateSpeed(){
@@ -85,4 +110,59 @@ public class Director : MonoBehaviour {
 	public void blastingOff(){
 		ghostFace.updateEnrageLvl(0); 
 	}	
+	public void AddToScore () {
+		if (!bronson.dead) {
+			score++;
+			scoreText = "Distance: " + score + "m";
+			if (score > maxScore) {
+				maxScore = score;
+				PlayerPrefs.SetInt("maxScore", maxScore);
+			}
+		}
+	}
+	public void blastingOff(bool blast) {
+		CancelInvoke ("AddToScore");
+		if (blast) {
+			InvokeRepeating ("AddToScore", 0.0f, 0.05f);
+		} else {
+			InvokeRepeating ("AddToScore", 0.0f, 0.2f);
+		}
+	}
+	public void DisplayMenu() {
+		float padding = (Screen.height - (Screen.width * 0.2885416667f + Screen.height * 0.1f)) / 3;
+		float buttonHeight = Screen.height * 0.1f;
+
+
+		GUIStyle styleHighscore = new GUIStyle ();
+		styleHighscore.fontSize = 80;
+		styleHighscore.normal.textColor = Color.white;
+		styleHighscore.font = myFont;
+		styleHighscore.alignment = TextAnchor.MiddleCenter;
+		Rect labelRect = new Rect (0, padding, Screen.width, Screen.width * 0.2885416667f);
+		GUI.DrawTexture(labelRect, menuTexture);                         
+
+		
+		Rect buttonRect = new Rect (Screen.width * 0.3f, labelRect.y + labelRect.height +  padding, Screen.width * 0.40f, buttonHeight);
+		GUIStyle style = new GUIStyle ();
+		style.fontSize = 20;
+		style.normal.textColor = Color.white;
+		style.font = myFont;
+		style.alignment = TextAnchor.MiddleCenter;
+		
+		Texture2D tex2 = new Texture2D ((int)buttonRect.width, (int)buttonRect.height); 
+		Color fillColor = Color.black;
+		Color[] fillColorArray = tex2.GetPixels ();
+		
+		for (int i = 0; i < fillColorArray.Length; ++i) {
+			fillColorArray [i] = fillColor;
+		}
+		tex2.SetPixels (fillColorArray);
+		tex2.Apply ();
+		style.normal.background = tex2;
+		
+
+		if (GUI.Button (buttonRect, "Tap to Start!", style)) {
+			Application.LoadLevel (1);
+		}
+	}
 }
