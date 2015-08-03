@@ -11,7 +11,7 @@ public class Director : MonoBehaviour {
 	public int blastOffCount = 5; 
 	int currLvl = 0; 
 	public Font myFont;
-	public Texture2D tweetTexture, ghostTexture, menuTexture;
+	public Texture2D tweetTexture, ghostTexture, menuTexture, instructionsTexture;
 	public int score = 0, maxScore;
 	public string scoreText = "Distance: 0m";
 	public bool dead = false;
@@ -132,15 +132,8 @@ public class Director : MonoBehaviour {
 		float padding = (Screen.height - (Screen.width * 0.2885416667f + Screen.height * 0.1f)) / 3;
 		float buttonHeight = Screen.height * 0.1f;
 
-
-		GUIStyle styleHighscore = new GUIStyle ();
-		styleHighscore.fontSize = 80;
-		styleHighscore.normal.textColor = Color.white;
-		styleHighscore.font = myFont;
-		styleHighscore.alignment = TextAnchor.MiddleCenter;
 		Rect labelRect = new Rect (0, padding, Screen.width, Screen.width * 0.2885416667f);
 		GUI.DrawTexture(labelRect, menuTexture);                         
-
 		
 		Rect buttonRect = new Rect (Screen.width * 0.3f, labelRect.y + labelRect.height +  padding, Screen.width * 0.40f, buttonHeight);
 		GUIStyle style = new GUIStyle ();
@@ -159,7 +152,11 @@ public class Director : MonoBehaviour {
 		tex2.SetPixels (fillColorArray);
 		tex2.Apply ();
 		style.normal.background = tex2;
-		
+
+		float instHeight = buttonRect.width * 53f / 301f;
+		Rect labelInst = new Rect (buttonRect.x, Screen.height - instHeight - 10, buttonRect.width, instHeight);
+		GUI.DrawTexture(labelInst, instructionsTexture);                         
+
 
 		if (GUI.Button (buttonRect, "Tap to Start!", style)) {
 			Application.LoadLevel (1);

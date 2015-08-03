@@ -377,6 +377,7 @@ MonoBehaviour:
   tweetTexture: {fileID: 2800000, guid: 4c5b9a1b04ed341cc8712645e06ceb85, type: 3}
   ghostTexture: {fileID: 2800000, guid: 2811f470fd923487ea714070d05ee9b2, type: 3}
   menuTexture: {fileID: 2800000, guid: 26312cc7884ad4c0a80f1feb6f113411, type: 3}
+  instructionsTexture: {fileID: 2800000, guid: c815b5b1f4e8f445c8db78d5f4caa239, type: 3}
   score: 0
   maxScore: 0
   scoreText: 'Distance: 0m'
